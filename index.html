@@ -79,13 +79,13 @@ I still remember the day when we met first time. যখন তোকে প্�
 <!-- Proposal Section -->
 <section class="h-screen flex flex-col justify-center items-center text-center relative">
 
-  <h2 class="text-4xl md:text-5xl text-rose-600 mb-10 fade-in">
-    Will you be my Valentine?
+  <h2 class="text-4xl md:text-5xl text-rose-600 mb-10 fade-in px-4">
+    তাই, my dear Noor e Jannat Mawa, will you be my নাগর, for today, for tomorrow, for rest of your life? 🤍
   </h2>
 
-  <div class="flex gap-10 items-center justify-center relative">
+  <div id="buttonContainer" class="flex gap-10 items-center justify-center relative w-full max-w-md">
 
-    <button onclick="sayYes()"
+    <button id="yesBtn" onclick="sayYes()"
       class="bg-rose-500 text-white px-8 py-3 rounded-full text-xl shadow-lg hover:scale-110 transition">
       Yes 💖
     </button>
@@ -98,11 +98,11 @@ I still remember the day when we met first time. যখন তোকে প্�
   </div>
 
   <div id="finalMessage" class="hidden mt-10 text-3xl text-rose-600">
-    You just made me the happiest person alive ❤️<br>
-    – Your Name
+    ভালোবাসি, আমার বুকের পাঁজরের হাড়। ❤️
   </div>
 
 </section>
+
 
 
 <script>
@@ -120,13 +120,33 @@ I still remember the day when we met first time. যখন তোকে প্�
     });
   }
 
- const noBtn = document.getElementById("noBtn");
+const noBtn = document.getElementById("noBtn");
+  const container = document.getElementById("buttonContainer");
 
-noBtn.addEventListener("mouseover", () => {
-  noBtn.style.transform =
-    `translate(${Math.random() * 100 - 50}px, ${Math.random() * 50 - 25}px)`;
-});
+  noBtn.addEventListener("mouseover", () => {
+    const containerRect = container.getBoundingClientRect();
+    const btnWidth = noBtn.offsetWidth;
 
+    // Move No button horizontally inside container but avoid overlapping Yes
+    const maxX = containerRect.width - btnWidth;
+    const x = Math.random() * maxX;
+
+    // Optional small vertical movement for playfulness
+    const y = (Math.random() - 0.5) * 20; // ±10px vertically
+
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  });
+
+  function sayYes() {
+    document.getElementById("finalMessage").classList.remove("hidden");
+
+    // Optional confetti
+    confetti({
+      particleCount: 200,
+      spread: 90,
+      origin: { y: 0.6 }
+    });
+  }
   // Floating hearts
   setInterval(() => {
     const heart = document.createElement("div");
